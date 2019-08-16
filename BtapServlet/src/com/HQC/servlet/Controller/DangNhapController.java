@@ -31,58 +31,28 @@ public class DangNhapController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
-		
+		RequestDispatcher dis = request.getRequestDispatcher("DangNhap.jsp");
+		dis.forward(request, response);			
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String check = String.valueOf(request.getParameter("userName"));
-					
-		 if(!check.equals("null")) { 
-			 String userName = request.getParameter("userName"); 
-			 String passWord =request.getParameter("passWord"); 
-			 String firstName = request.getParameter("firstName"); 
-			 String lastName = request.getParameter("lastName"); 
-			 int age =Integer.parseInt(request.getParameter("age")); 
-			 String avatar = request.getParameter("avatar");
-			 String memo = request.getParameter("memo");
-			 String alone = request.getParameter("alone"); 
-			 if (alone.equals("on")) {
-				 alone= "checked"; 
-			 } 
-			 User user = new User(); 
-			 
-			 user.setUserName(userName);
-			 user.setPassWord(passWord); 
-			 user.setFirstName(firstName);
-			 user.setLastName(lastName); 
-			 user.setAge(age); 
-			 user.setAvatar(avatar);
-			 user.setMemo(memo); 
-			 user.setAlone(alone);
-			 
-			 System.out.println("user la " + user.getUserName());
-			 System.out.println("pass la " + user.getPassWord());
-			 System.out.println("firt name la: "  + user.getFirstName());
-			 System.out.println("last name la: "  + user.getLastName());
-			 System.out.println("tuoi: " + user.getAge());
-			 System.out.println("avatar: " + user.getAvatar());
-			 System.out.println("memo: " + user.getMemo());
-			 System.out.println("alone: " + user.getAlone());
-		  
-			 UserDAO userDao = new UserDAO(); 
-			 userDao.InsertUser(user);
-		  
+		String userName = request.getParameter("userName");
+		String passWord = request.getParameter("passWord");
 		
-		  }
+		UserDAO userDao = new UserDAO();
+		User use = userDao.CheckUser(userName, passWord);
+		request.setAttribute("firstName", use.getFirstName());
+		request.setAttribute("lastName", use.getLastName());
+		request.setAttribute("age", use.getAge());
+		request.setAttribute("avatar", use.getAvatar());
+		request.setAttribute("memo", use.getMemo());
+		request.setAttribute("alone", use.getAlone());
 		
-		RequestDispatcher dis = request.getRequestDispatcher("DangNhap.jsp");
-		dis.forward(request, response);
+		RequestDispatcher dis = request.getRequestDispatcher("ChiTiet.jsp");
+		dis.forward(request, response);		
 	}
 
 }

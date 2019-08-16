@@ -42,11 +42,11 @@ button:hover {
 </style>
 <body>
 	<div>
-		<form action="DangKy" method="post">		
+		<form action="DangKy" method="get">		
 			<button type="submit">dang ky</button>		
 	 	</form>
 	
-	 	<form action="DangNhap" method="post">		
+	 	<form action="DangNhap" method="get">		
 			<button type="submit">dang nhap</button>		
 	 	</form>
 	</div>
